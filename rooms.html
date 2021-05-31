@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-database.js"></script>
+    </head>
+    <body>
+        <div id = "a">
+            <h2>Join A Room</h2>
+            <input type="text" placeholder="Room Id" id = "room-id">
+            <p></p>
+            <button id = "join-room">Join</button>
+        </div>
+        <div>
+            <h2 id = "rename">Create A Room</h2>
+            <input type="text" placeholder="Room Name" id = "room-name">
+            <p></p>
+            <button id = "create-room">Create</button>
+        </div>
+        <canvas id = "canvas" width="700"; height="700"></canvas>
+    </body>
+    <script src="room.js"></script>
+    <style>
+        div {
+            text-align: center;
+            margin-top: 2%;
+        }
+        input {
+            text-align: center;
+            width: 200px;
+            height: 50px;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        button {
+            font-family: Arial, Helvetica, sans-serif;
+            cursor: pointer;
+            width: 200px;
+            height: 60px;
+            margin: auto;
+        }
+        
+    </style>
+</html>
