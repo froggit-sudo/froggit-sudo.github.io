@@ -27,6 +27,8 @@ var userTurn;
 
 var type;
 
+var won = false;
+
 var mainColor;
 
 var userToken = {
@@ -96,14 +98,13 @@ function createRoom(id) {
 var c;
 
 
-
-
 document.getElementById("create-room").onclick = function() {
     let roomId = document.getElementById("room-name").value;
     c = roomId;
     if (roomId.length > 3 && roomId != "") {
         createRoom(roomId);
         roomDeployed = true;
+        document.getElementById("a").appendChild(canvas)
     }
 }
 
@@ -119,7 +120,7 @@ var matchData;
 
 console.log("Nice try!")
 console.log("I\'m not allowing you to read the server data.")
-console.log("hah")
+console.log("Hah! Now you\'ll have to read through my garbage code to find the server data!")
 
 function getData(data) {
     serverData = data.val();
@@ -134,6 +135,9 @@ function getData(data) {
     if (matchData != null && matchData.playerCount == 2) {
         playing = true;
     }
+    if (matchData != null && matchData.playerCount == 1) {
+        playing = false;
+    }
 }
 
 var returnedColor;
@@ -145,6 +149,18 @@ function checkWin() {
             if (board[n].color == board[n+1].color && board[n].color == board[n + 2].color && board[n].color == board[n + 3].color) {
                 if (board[n].color != "white") {
                     returnedColor = board[n].color;
+                    if (board[n].color == "red") {
+                        circle(board[n].x, board[n].y, 40, "#ffffed");
+                        circle(board[n+1].x, board[n+1].y, 40, "#ffffed");
+                        circle(board[n+2].x, board[n+2].y, 40, "#ffffed");
+                        circle(board[n+3].x, board[n+3].y, 40, "#ffffed");
+                    }
+                    if (board[n].color == "yellow") {
+                        circle(board[n].x, board[n].y, 40, "#ffffa1");
+                        circle(board[n+1].x, board[n+1].y, 40, "#ffffa1");
+                        circle(board[n+2].x, board[n+2].y, 40, "#ffffa1");
+                        circle(board[n+3].x, board[n+3].y, 40, "#ffffa1");
+                    }
                     return true;
                 }
             }
@@ -153,6 +169,18 @@ function checkWin() {
             if (board[n].color == board[n - 7].color && board[n].color == board[n - 14].color && board[n].color == board[n - 21].color) {
                 if (board[n].color != "white") {
                     returnedColor = board[n].color;
+                    if (board[n].color == "red") {
+                        circle(board[n].x, board[n].y, 40, "#ff726f");
+                        circle(board[n-7].x, board[n-7].y, 40, "#ff726f");
+                        circle(board[n-14].x, board[n-14].y, 40, "#ff726f");
+                        circle(board[n-21].x, board[n-21].y, 40, "#ff726f");
+                    }
+                    if (board[n].color == "yellow") {
+                        circle(board[n].x, board[n].y, 40, "#ffffa1");
+                        circle(board[n-7].x, board[n-7].y, 40, "#ffffa1");
+                        circle(board[n-14].x, board[n-14].y, 40, "#ffffa1");
+                        circle(board[n-21].x, board[n-21].y, 40, "#ffffa1");
+                    }
                     return true;
                 }
             }
@@ -162,6 +190,18 @@ function checkWin() {
             if (board[n].color == board[n-8].color && board[n].color == board[n - 16].color && board[n].color == board[n - 24].color) {
                 if (board[n].color != "white") {
                     returnedColor = board[n].color;
+                    if (board[n].color == "red") {
+                        circle(board[n].x, board[n].y, 40, "#ff726f");
+                        circle(board[n-8].x, board[n-8].y, 40, "#ff726f");
+                        circle(board[n-16].x, board[n-16].y, 40, "#ff726f");
+                        circle(board[n-24].x, board[n-24].y, 40, "#ff726f");
+                    }
+                    if (board[n].color == "yellow") {
+                        circle(board[n].x, board[n].y, 40, "#ffffa1");
+                        circle(board[n-8].x, board[n-8].y, 40, "#ffffa1");
+                        circle(board[n-16].x, board[n-16].y, 40, "#ffffa1");
+                        circle(board[n-24].x, board[n-24].y, 40, "#ffffa1");
+                    }
                     return true;
                 }
             }
@@ -171,6 +211,18 @@ function checkWin() {
             if (board[n].color == board[n-6].color && board[n].color == board[n - 12].color && board[n].color == board[n - 18].color) {
                 if (board[n].color != "white") {
                     returnedColor = board[n].color;
+                    if (board[n].color == "red") {
+                        circle(board[n].x, board[n].y, 40, "#ff726f");
+                        circle(board[n-6].x, board[n-6].y, 40, "#ff726f");
+                        circle(board[n-12].x, board[n-12].y, 40, "#ff726f");
+                        circle(board[n-18].x, board[n-18].y, 40, "#ff726f");
+                    }
+                    if (board[n].color == "yellow") {
+                        circle(board[n].x, board[n].y, 40, "#ffffa1");
+                        circle(board[n-6].x, board[n-6].y, 40, "#ffffa1");
+                        circle(board[n-12].x, board[n-12].y, 40, "#ffffa1");
+                        circle(board[n-18].x, board[n-18].y, 40, "#ffffa1");
+                    }
                     return true;
                 }
             }
@@ -212,6 +264,7 @@ document.getElementById("join-room").onclick = function() {
         if (serverKeys[i].id == roomId) {
             joinRoomData = serverKeys[i];
             joinRoom(serverKeys[i].id);
+            document.getElementById("a").appendChild(canvas)
         }
     }
 }
@@ -220,6 +273,20 @@ function error(err) {
     console.log(err);
 }
 
+
+window.addEventListener('beforeunload', function (e) {
+    matchData.playerCount--;
+    database.ref("rooms").child(c).set({
+        id: c,
+        playerCount: matchData.playerCount,
+        board: matchData.board,
+        turn: matchData.turn,
+        columns: matchData.columns
+    });
+    if (matchData.playerCount == 0) {
+        database.ref("rooms/"+c).remove();
+    }
+});
 
 function drawBoard() {
     drawRect(0, 100, 700, 600, "blue");
@@ -263,35 +330,37 @@ function fillCircle(currentIndex) {
 }
 
 document.body.onkeyup = function(e){
-    if(e.keyCode == 32){    
-        if (matchData.turn % 2 == 0 && !type) {
-            if (g[currentUserIndex].spacesLeft != 0) {
-                g[currentUserIndex].spacesLeft--;      
+    if(e.keyCode == 32){
+        if (!won) {
+            if (matchData.turn % 2 == 0 && !type) {
+                if (g[currentUserIndex].spacesLeft != 0) {
+                    g[currentUserIndex].spacesLeft--;      
+                }
+                matchData.turn++;
+                fillCircle(currentUserIndex);
+                database.ref("rooms").child(c).set({
+                    id: c,
+                    playerCount: matchData.playerCount,
+                    board: board,
+                    turn: matchData.turn,
+                    columns: g
+                });
             }
-            matchData.turn++;
-            fillCircle(currentUserIndex);
-            database.ref("rooms").child(c).set({
-                id: c,
-                playerCount: matchData.playerCount,
-                board: board,
-                turn: matchData.turn,
-                columns: g
-            });
-        }
-        if (matchData.turn % 2 == 1 && type) {
-            if (g[currentUserIndex].spacesLeft != 0) {
-                g[currentUserIndex].spacesLeft--;      
+            if (matchData.turn % 2 == 1 && type) {
+                if (g[currentUserIndex].spacesLeft != 0) {
+                    g[currentUserIndex].spacesLeft--;      
+                }
+                matchData.turn++;
+                fillCircle(currentUserIndex);
+                database.ref("rooms").child(c).set({
+                    id: c,
+                    playerCount: matchData.playerCount,
+                    board: board,
+                    turn: matchData.turn,
+                    columns: g
+                });
             }
-            matchData.turn++;
-            fillCircle(currentUserIndex);
-            database.ref("rooms").child(c).set({
-                id: c,
-                playerCount: matchData.playerCount,
-                board: board,
-                turn: matchData.turn,
-                columns: g
-            });
-        }
+        }    
     }
 }
 
@@ -312,7 +381,7 @@ document.addEventListener('keydown', (e)=> {
 
 function draw() {
     if (roomDeployed) {
-        canvas.style.border = "3px solid black"
+        canvas.style.border = "3px solid black";
         if (playing) {
             drawRect(0, 0, 800, 800, "white")
             drawBoard();
@@ -320,8 +389,20 @@ function draw() {
             circle(userToken.x, userToken.y, 40, mainColor);
             checkType();
             if (checkWin()) {
-                playing = false;
                 e = returnedColor + " wins!"
+                display.font = "30px Arial";
+                display.textAlign = "center"
+                display.fillStyle = "black"
+                display.fillText(e, canvas.width/2, 50); 
+                won = true;
+            }
+            if (matchData.turn % 2 == 1 && joinRoomData != null) {
+                document.getElementById("rename").innerHTML = "It\'s your turn"
+            } else {
+                document.getElementById("rename").innerHTML = "The other player is thinking..."
+            }
+            if (matchData.turn % 2 == 0 && joinRoomData == null) {
+                document.getElementById("rename").innerHTML = "It\'s your turn"
             }
         } else {
             drawRect(0, 0, 800, 800, "white")
