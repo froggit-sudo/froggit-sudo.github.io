@@ -3,7 +3,7 @@ people.once("value", getData, error);
 function appendChild(firstName) {
     var aTag = document.createElement("A");
     aTag.innerHTML = "Name: " + firstName
-    aTag.href = "http://localhost:63342/dynamic%20links/person.html" + "?name=" + firstName;
+    aTag.href = window.location.href + "?name=" + firstName;
     document.getElementById("people").appendChild(aTag);
 }
 
