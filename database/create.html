@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+			 https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+        <script src = "base.js"></script>
+    </head>
+    <body>
+        <h1>Create a person</h1>
+        <input type="text" placeholder="Name" id="name">
+        <p></p>
+        <input type="text" placeholder="Last Name" id="lastname">
+        <p></p>
+        <input type="text" placeholder="Age" id="age">
+        <p></p>
+        <input type="text" placeholder="Height" id="height">
+        <p></p>
+        <input type="text" placeholder="Bio" id="bio">
+        <p></p>
+        <button id = "create">Add person to database</button>
+    </body>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <script src = "script.js"></script>
+</html>
