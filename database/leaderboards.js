@@ -35,15 +35,6 @@ lbRef.on("value", retrieve, er);
 
 function loadLeaderboard(list) {
     let l = list[0];
-    l.forEach((person) => {
-       //console.log(person);
-       let aTag = document.createElement("a");
-       aTag.innerHTML = person;
-       aTag.href = "https://froggit-sudo.github.io/database/person?name=" + person;
-       aTag.className = "person";
-       peopleDOMElements.push(aTag);
-       document.getElementById("span").appendChild(aTag);
-    });
     for (let i = 0; i < l.length; i++) {
        let person = l[i]
        let aTag = document.createElement("a");
