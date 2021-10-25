@@ -1,0 +1,37 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "jsx": true,
+      "useJSXTextNode": true,
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+  },
+  "plugins": [
+      "@typescript-eslint",
+      "prettier"
+  ],
+  "extends": [
+      "next/core-web-vitals",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+  ],
+  "rules": {
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/ban-types": "off",
+      "prettier/prettier": [
+          "warn",
+          {
+              "semi": true,
+              "trailingComma": "all",
+              "singleQuote": false,
+              "printWidth": 120,
+              "tabWidth": 4,
+              "useTabs": true
+          }
+      ]
+  }
+}

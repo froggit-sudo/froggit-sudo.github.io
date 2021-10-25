@@ -1,0 +1,19 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background-color: whitesmoke;
+    width: 700px;
+    height: 700px;
+    overflow-y: scroll;
+}
+
+.message {
+    width: 700px;
+}
+
+.p {
+    margin-left: 0.5%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
