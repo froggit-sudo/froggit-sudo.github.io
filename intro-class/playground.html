@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Playground</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    label {
+        margin-bottom: 2.5px;
+        margin-top: 10px;
+        padding: 0px;
+        height: 5px;
+    }
+
+    * {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    .playground {
+        height: calc(100vh - 50px);
+        overflow: auto;
+        padding: 20px;
+    }
+    .toolbox {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f0f0f0;
+        padding: 10px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .toolbox button{
+        margin-right: 10px;
+        padding: 8px 15px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .toolbox button:hover {
+        background-color: #0056b3;
+    }
+
+    .selected {
+        outline: 10px solid rgb(215, 215, 255);
+        cursor: pointer;
+    }
+
+    #properties-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        width: 300px;
+    }
+    #properties-panel h2 {
+        margin-top: 0;
+    }
+    #properties-panel label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    #done-button, .nav {
+        margin-top: 10px;
+        padding: 8px 15px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    #done-button:hover {
+        background-color: #0056b3;
+    }
+
+    .attributeEditor {}
+
+    input {
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #resetElements, #delete-button {
+        background-color: rgb(255, 123, 0);
+    }
+
+    #delete-button {
+        margin-left: 5px;
+    }
+
+    p {
+        width: max-content;
+    }
+</style>
+</head>
+<body>
+<div class="playground" id="playground">
+    <!-- Elements will be dynamically added here -->
+</div>
+<div class="toolbox">
+    <button id = "inputCreate">Text Input</button>
+    <button id = "buttonCreate">Button</button>
+    <button id = "textCreate">Text</button>
+    <button id = "imgCreate">Image</button>
+    <button onclick = "resetStyles()" id = "resetElements">Reset</button>
+</div>
+<div id="properties-panel">
+    <h2>Element Properties</h2>
+    <div class = "attributeEditor">
+        <label for="backgroundColor">Background Color:</label>
+        <input type="text" id="backgroundColor">
+    </div>
+    <div class = "attributeEditor">
+        <label for="textColor">Text Color:</label>
+        <input type="text" id="textColor">
+    </div>
+    <div class = "attributeEditor">
+        <label for="width">Width:</label>
+        <input type="text" id="width">
+    </div>
+    <div class = "attributeEditor">
+        <label for="height">Height:</label>
+        <input type="text" id="height">
+    </div>
+    <div class = "attributeEditor">
+        <label for="padding">Padding:</label>
+        <input type="text" id="padding">
+    </div>
+    <div class = "attributeEditor">
+        <label for="margin">Margin:</label>
+        <input type="text" id="margin">
+    </div>
+    <div style="display: flex;">
+        <button id="done-button">Done</button>
+        <button id = "delete-button" class = "nav">Delete</button>
+    </div>
+</div>
+
+<script defer>
+    console.log("Initializing...")
+    let elements = [];
+
+    // bash event listeners
+
+    document.getElementById("inputCreate").onclick = () => {
+        createElement("input"); 
+    }
+
+    document.getElementById("buttonCreate").onclick = () => {
+        createElement("button"); 
+    }
+
+    document.getElementById("textCreate").onclick = () => {
+        createElement("p"); 
+    }
+
+    document.getElementById("imgCreate").onclick = () => {
+        createElement("img"); 
+    }
+
+    function resetStyles() {
+        document.getElementById("playground").innerHTML = ``;
+        createElement("button");
+        createElement("input");
+        createElement("img");
+        createElement("p");
+    }
+
+    let propertiesPanel = document.getElementById("properties-panel")
+    function createElement(type) {
+        let newChild = document.createElement(type);
+        console.log(`Creating element: ${type}`)
+        styleElement(newChild)
+        newChild.fundamental = type;
+        document.getElementById('playground').appendChild(newChild);
+
+        newChild.addEventListener("mouseover", () => {
+            console.log("Element hovered over!")
+            newChild.classList.add("selected")
+        }) 
+
+        newChild.addEventListener('mouseout', () => {
+            newChild.classList.remove('selected');  
+        });
+
+        newChild.onclick = () => {
+            // get properties
+            let properties = {
+                backgroundColor: window.getComputedStyle(newChild).getPropertyValue('background-color'),
+                textColor: window.getComputedStyle(newChild).getPropertyValue('color'),
+                width: window.getComputedStyle(newChild).getPropertyValue('width'),
+                height: window.getComputedStyle(newChild).getPropertyValue('height'),
+                padding: window.getComputedStyle(newChild).getPropertyValue('padding'),
+                margin: window.getComputedStyle(newChild).getPropertyValue('margin')
+            };
+            showPropertiesPanel(newChild);
+            let styleDiv = document.createElement("div");
+
+            console.log(`${type} clicked! Properties: `, properties)
+        }
+
+        if (type == "input") {
+            newChild.type = 'text';
+            newChild.placeholder = 'Type here';
+
+        } else if (type == "button") {
+            newChild.textContent = "Click Me!"
+
+        } else if (type == "p") {
+            newChild.innerText = "I'm a block of text! \nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"
+            
+        } else if (type == "img") {
+            newChild.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrmojuD-xMi5uPUpCwC6b-Z0dFubMSpZXRAA&s"
+            
+        }
+        elements.push(newChild);
+        return newChild
+    }
+
+    function styleElement(element) {
+        element.style.margin = '10px';
+        element.style.padding = '10px';
+        element.style.border = '1px solid #ccc';
+        element.style.borderRadius = '5px';
+    }
+
+    function showPropertiesPanel(selectedElement) {
+        propertiesPanel.style.display = 'block';
+            document.getElementById('backgroundColor').value = window.getComputedStyle(selectedElement).getPropertyValue('background-color');
+            document.getElementById('textColor').value = window.getComputedStyle(selectedElement).getPropertyValue('color');
+            document.getElementById('width').value = window.getComputedStyle(selectedElement).getPropertyValue('width');
+            document.getElementById('height').value = window.getComputedStyle(selectedElement).getPropertyValue('height');
+            document.getElementById('padding').value = window.getComputedStyle(selectedElement).getPropertyValue('padding');
+            document.getElementById('margin').value = window.getComputedStyle(selectedElement).getPropertyValue('margin');
+        document.getElementById("done-button").onclick = () => {
+            console.log("Closing modal and setting styles! Selected Element: ", selectedElement);
+            selectedElement.style.backgroundColor = document.getElementById('backgroundColor').value
+            selectedElement.style.color = document.getElementById('textColor').value;
+            selectedElement.style.width = document.getElementById('width').value;
+            selectedElement.style.height = document.getElementById('height').value;
+            selectedElement.style.padding = document.getElementById('padding').value;
+            selectedElement.style.margin = document.getElementById('margin').value;
+            propertiesPanel.style.display = 'none';
+        }
+        document.getElementById("delete-button").onclick = () => {
+            console.log("Deleting element! Selected Element: ", selectedElement);
+            selectedElement.remove();
+            propertiesPanel.style.display = 'none';
+        }
+    }
+
+    createElement("button");
+    createElement("input");
+    createElement("p");
+    createElement("img");
+</script>
+</body>
+</html>
+
